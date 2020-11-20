@@ -1,0 +1,10 @@
+<button *ngFor="let idp of identityProviders" type="button"
+  class="identity-provider centered-button" [ngStyle]="{
+      border: '1px solid ' + idp.borderColor,
+      background: idp.backgroundColor,
+      color: idp.textColor
+    }" (click)="registerWith(idp)">
+  <img *ngIf="idp.image" [src]="idp.image.url" [alt]="idp.name"
+    class="aria-hidden">
+  <span [innerHTML]="i18n.identityProvider.login(idp.name) | trust"></span>
+</button>

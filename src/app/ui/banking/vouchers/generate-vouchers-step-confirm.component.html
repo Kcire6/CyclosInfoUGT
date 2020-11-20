@@ -1,0 +1,24 @@
+<label-value [label]="i18n.general.type">
+  {{ data.type.voucherTitle }}
+</label-value>
+<label-value [label]="i18n.voucher.numberOfVouchers">
+  {{ generateVoucher.count }}
+</label-value>
+<label-value [label]="i18n.voucher.amountPerVoucher">
+  {{ generateVoucher.amount | currency:data.account.currency }}
+</label-value>
+<label-value *ngIf="user" [label]="i18n.general.user">
+  <user-link [user]="user"></user-link>
+</label-value>
+
+<ng-container *ngIf="confirmationPasswordInput">
+  <hr *ngIf="layout.gtxxs$ | async">
+  <form [formGroup]="form">
+    <confirmation-password focused formControlName="confirmationPassword"
+      [passwordInput]="confirmationPasswordInput"
+      [createDeviceConfirmation]="createDeviceConfirmation"
+      (confirmationModeChanged)="confirmationModeChanged.emit($event)"
+      (confirmed)="confirmed.emit($event)">
+    </confirmation-password>
+  </form>
+</ng-container>

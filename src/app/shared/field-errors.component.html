@@ -1,0 +1,4 @@
+<div *ngIf="(control.statusChanges | async) === 'INVALID' && control.touched"
+  class="invalid-feedback">
+  {{ message }}
+</div>

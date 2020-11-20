@@ -1,0 +1,15 @@
+<alert [type]="alertType"
+  [dismissible]="allowClose && (layout.gtxxs$ | async)"
+  (onClose)="modalRef.hide()">
+  <div class="d-flex flex-column flex-xs-row align-items-center">
+    <icon size="2rem" [icon]="icon"></icon>
+    <div class="notification-message" *ngIf="message; else renderContent"
+      [innerHTML]="message | trust"></div>
+  </div>
+</alert>
+
+<ng-template #renderContent>
+  <div class="notification-message">
+    <ng-content></ng-content>
+  </div>
+</ng-template>

@@ -1,0 +1,137 @@
+<style>
+  .events {
+    font-size: 0.875rem;
+  }
+
+  .event {
+    padding: 0.5rem 0;
+    display: flex;
+  }
+
+  .event-date,
+  .event-description {
+    padding: 0.31rem;
+  }
+
+  .event-date {
+    text-align: center;
+    flex: 0 0 6rem;
+  }
+
+  .year {
+    font-size: 0.9em;
+  }
+
+  .day-of-month {
+    font-weight: 500;
+    font-size: 1rem;
+  }
+
+  .event-description {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 1rem;
+  }
+
+  .event-title {
+    font-weight: 500;
+    margin-bottom: 0.1rem;
+  }
+
+  .notice {
+    text-align: center;
+    padding: 1.1rem 0;
+    font-style: italic;
+    font-size: 0.8rem;
+  }
+
+  /* md */
+  @media screen and (min-width: 768px) {
+    .event-date {
+      flex-basis: 7rem;
+    }
+  }
+
+</style>
+<div class="events">
+  <div class="event border-bottom">
+    <div class="event-date border-right">
+      <div class="day-of-week">
+        Vie
+      </div>
+      <div class="day-of-month accent-color">
+        May 1
+      </div>
+      <div class="year">
+        2020
+      </div>
+    </div>
+    <div class="event-description">
+      <div class="event-title">Celebracion Trabajadores</div>
+      <div class="text-muted">Oficina central cerrada por asueto.</div>
+    </div>
+  </div>
+
+  <div class="event border-bottom">
+    <div class="event-date border-right">
+      <div class="day-of-week">
+        Dom
+      </div>
+      <div class="day-of-month accent-color">
+        Jun 14
+      </div>
+      <div class="year">
+        2020
+      </div>
+    </div>
+    <div class="event-description">
+      <div class="event-title">Reunion Proveedor InstrucTest</div>
+      <div class="text-muted">Reunion de negociacion de precios con proveedor.
+      </div>
+    </div>
+  </div>
+
+  <div class="event border-bottom">
+    <div class="event-date border-right">
+      <div class="day-of-week">
+        Sab
+      </div>
+      <div class="day-of-month accent-color">
+        Ago 15
+      </div>
+      <div class="year">
+        2020
+      </div>
+    </div>
+    <div class="event-description">
+      <div class="event-title">Reunion Importadores</div>
+      <div class="text-muted">Reunion anual de importadores internacionales y
+        nacionales.</div>
+    </div>
+  </div>
+
+  <div class="event border-bottom">
+    <div class="event-date border-right">
+      <div class="day-of-week">
+        Vie
+      </div>
+      <div class="day-of-month accent-color">
+        Dic 25
+      </div>
+      <div class="year">
+        2020
+      </div>
+    </div>
+    <div class="event-description">
+      <div class="event-title">Aniversario Empresa</div>
+      <div class="text-muted">Celebracion por el aniversario de la empresa.
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="notice text-muted">
+  <!-- This is an example of content that could be fetched from an external source -->
+</div>

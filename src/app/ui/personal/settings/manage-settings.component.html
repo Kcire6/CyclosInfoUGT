@@ -1,0 +1,12 @@
+<page-layout>
+  <page-content [heading]="i18n.setting.title"
+    [mobileHeading]="i18n.setting.mobileTitle" last>
+    <radio-group-field [label]="i18n.setting.theme"
+      [formControl]="darkThemeControl">
+      <field-option [value]="false" [text]="i18n.setting.themeLight">
+      </field-option>
+      <field-option [value]="true" [text]="i18n.setting.themeDark">
+      </field-option>
+    </radio-group-field>
+  </page-content>
+</page-layout>

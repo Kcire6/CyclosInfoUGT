@@ -1,0 +1,30 @@
+<div class="page-layout" [ngClass]="{
+      'has-left-area': leftAreaVisible$ | async,
+      'justify-content-center': (leftAreaVisible$ | async) === false
+    }">
+  <div *ngIf="leftAreaVisible$ | async" class="side-area">
+    <ng-container *ngIf="(loggingOut$ | async) === false">
+      <side-menu *ngIf="(login.user$ | async) && (menu.activeMenu$ | async)">
+      </side-menu>
+      <banner-card
+        *ngFor="let card of bannerCards$ | async; let first = first"
+        [card]="card"
+        [firstInLayout]="first && (leftMenuVisible$ | async) === false"
+        [ngClass]="card.ngClass" [ngStyle]="card.ngStyle"></banner-card>
+    </ng-container>
+  </div>
+
+  <div #contentArea class="content-area d-flex flex-column" [ngClass]="{
+      'content-area-small': size === 'small',
+      'content-area-medium': (leftAreaVisible$ | async) ? false : size === 'medium',
+      'content-area-large': (leftAreaVisible$ | async) ? false : size === 'large'
+    }">
+    <ng-content *ngIf="ready else loading"></ng-content>
+  </div>
+</div>
+
+<ng-template #loading>
+  <page-content [mode]="(layout.ltsm$ | async) ? 'fullHeight' : 'normal'">
+    <spinner></spinner>
+  </page-content>
+</ng-template>

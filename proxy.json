@@ -1,0 +1,7 @@
+{
+  "/api/*": {
+    "target": "https://communities.cyclos.org/chilin",
+    "secure": false,
+    "changeOrigin": true
+  }
+}

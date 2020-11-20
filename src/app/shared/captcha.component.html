@@ -1,0 +1,14 @@
+<ng-container [formGroup]="form">
+  <div class="flex-grow-1 d-flex justify-content-center mb-1">
+    <img #image alt="captcha">
+  </div>
+  <div class="d-flex">
+    <input class="form-control mr-1" formControlName="response" [ngClass]="{
+      'is-invalid': (form.get('response').statusChanges | async) === 'INVALID' && form.get('response').touched
+    }">
+    <button class="btn btn-icon" (click)="newCaptcha()">
+      <icon icon="refresh"></icon>
+    </button>
+  </div>
+  <field-errors [control]="form.get('response')"></field-errors>
+</ng-container>

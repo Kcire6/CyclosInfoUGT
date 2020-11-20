@@ -1,0 +1,9 @@
+<page-layout [ready]="data$ | async" size="medium" hideMenu>
+  <page-content *ngIf="data">
+    <registration-step-done [result]="result"></registration-step-done>
+    <actions>
+      <action-button (action)="goToLogin()" [label]="i18n.menu.login">
+      </action-button>
+    </actions>
+  </page-content>
+</page-layout>

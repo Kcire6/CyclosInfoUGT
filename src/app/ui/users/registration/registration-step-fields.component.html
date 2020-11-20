@@ -1,0 +1,116 @@
+<!-- Image -->
+<ng-container *ngIf="imageAvailability !== 'disabled'">
+  <h2 class="border-0">{{ i18n.user.title.image }}</h2>
+  <div class="row">
+    <div class="col-12 col-sm-4">
+      <div class="d-flex justify-content-center justify-content-sm-start">
+        <avatar *ngIf="image$ | async; else noImage" [image]="image"
+          size="huge" useLightbox>
+        </avatar>
+        <ng-template #noImage>
+          {{ i18n.user.noImage }}
+        </ng-template>
+      </div>
+      <image-upload #upload containerClass="mt-3" target="userRegistration"
+        keepUrls (uploadDone)="onUploadDone($event[0])"></image-upload>
+    </div>
+    <div
+      class="col-12 col-sm-8 mt-3 mt-sm-0 d-flex justify-content-between justify-content-sm-end align-items-end"
+      *ngIf="(upload.uploading$ | async) === false">
+      <action-button [disabled]="requesting$ | async"
+        (action)="upload.perform()" [label]="i18n.field.image.upload" outline>
+      </action-button>
+      <action-button *ngIf="image" class="ml-3" outline
+        [disabled]="requesting$ | async" (action)="removeImage()"
+        [label]="i18n.field.image.remove">
+      </action-button>
+    </div>
+  </div>
+  <h2 class="mt-4">{{ i18n.user.title.fields }}</h2>
+</ng-container>
+
+<!-- Basic profile fields-->
+<ng-container [formGroup]="form">
+  <input-field *ngIf="canEdit('name')" formControlName="name"
+    [label]="i18n.user.name" required></input-field>
+  <input-field *ngIf="canEdit('username')" formControlName="username"
+    [label]="i18n.user.username" required></input-field>
+  <ng-container *ngIf="canEdit('email')">
+    <label-value [label]="i18n.user.email" kind="field"
+      [ignoreExtraCell]="!canManagePrivacy('email')"
+      [required]="data.emailRequired">
+      <input-field formControlName="email" [required]="data.emailRequired">
+      </input-field>
+      <field-privacy *extraCell field="email"
+        [control]="form.get('hiddenFields')"></field-privacy>
+    </label-value>
+    <boolean-field *ngIf="data.allowSetSendActivationEmail"
+      [label]="i18n.user.registration.skipActivationEmail"
+      formControlName="skipActivationEmail"></boolean-field>
+  </ng-container>
+</ng-container>
+
+<!-- Custom profile fields -->
+<ng-container *ngFor="let cf of data.customFields"
+  [formGroup]="form.get('customValues')">
+  <label-value *ngIf="canEdit(cf)" [label]="cf.name" kind="field"
+    [ignoreExtraCell]="!canManagePrivacy(cf)" [fieldSize]="cf.size"
+    [required]="cf.required">
+    <custom-field-input [field]="cf" hideLabel
+      [formControlName]="cf.internalName"
+      (imagesUploaded)="customImagesUploaded.emit($event)"
+      (filesUploaded)="customFilesUploaded.emit($event)">
+    </custom-field-input>
+    <field-privacy *extraCell [field]="cf.internalName"
+      [control]="form.get('hiddenFields')"></field-privacy>
+  </label-value>
+</ng-container>
+
+<!-- Mobile phone -->
+<label-value *ngIf="mobileAvailability !== 'disabled'"
+  [label]="i18n.phone.mobile" [required]="mobileAvailability === 'required'"
+  kind="field" [formGroup]="mobileForm">
+  <input-field formControlName="number"
+    [placeholder]="data.phoneConfiguration.mobileExample"></input-field>
+  <field-privacy *extraCell [control]="mobileForm.get('hidden')">
+  </field-privacy>
+</label-value>
+
+<!-- Land-line phone -->
+<ng-container *ngIf="landLineAvailability !== 'disabled'"
+  [formGroup]="landLineForm">
+  <label-value [label]="i18n.phone.landLine"
+    [required]="data.phoneConfiguration.landLineAvailability === 'required'"
+    kind="field">
+    <input-field formControlName="number"
+      [placeholder]="data.phoneConfiguration.landLineExample"></input-field>
+    <field-privacy *extraCell [control]="landLineForm.get('hidden')">
+    </field-privacy>
+  </label-value>
+  <input-field *ngIf="data.phoneConfiguration.extensionEnabled"
+    formControlName="extension" fieldSize="tiny"
+    [label]="i18n.phone.extension"></input-field>
+</ng-container>
+
+<!-- Address -->
+<ng-container *ngIf="addressAvailability !== 'disabled'">
+  <h2 class="mt-4">{{ i18n.address.address }}</h2>
+  <boolean-field *ngIf="data.addressConfiguration.availability !== 'required'"
+    [formControl]="defineAddress" [label]="i18n.user.addressDefine" switch>
+  </boolean-field>
+  <address-form *ngIf="defineAddress.value" [addressForm]="addressForm"
+    ignoreContactFields [configuration]="data.addressConfiguration"
+    [managePrivacy]="data.addressConfiguration.managePrivacy">
+  </address-form>
+  <label-value [label]="i18n.general.map" kind="field"
+    *ngIf="defineAddress.value && maps.enabled">
+    <static-map
+      *ngIf="(addressForm.get('location').valueChanges | async)?.latitude != null; else viewMap"
+      (imageLoaded)="mapShown()" [address]="addressForm.value"></static-map>
+    <ng-template #viewMap>
+      <action-button outline [disabled]="locatingAddress$ | async"
+        (action)="locateAddress()" [label]="i18n.general.mapView">
+      </action-button>
+    </ng-template>
+  </label-value>
+</ng-container>

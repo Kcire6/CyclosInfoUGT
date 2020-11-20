@@ -1,0 +1,18 @@
+<maybe-link *ngIf="path != null; else displayTpl" [link]="path"
+  class="d-flex flex-row">
+  <ng-container *ngTemplateOutlet="displayTpl"></ng-container>
+</maybe-link>
+
+<ng-template #displayTpl>
+  <div class="d-flex flex-row" [ngClass]="{'has-link': !!path}">
+    <avatar *ngIf="!operator" ngClass="mr-2" [image]="user?.image"
+      [icon]="user ? 'user' : 'account_balance_circle'" size="small"
+      iconSize="28px"></avatar>
+    <div class="display-text">
+      {{ display }}
+      <ng-container *ngIf="account?.number">
+        ({{ account.number }})
+      </ng-container>
+    </div>
+  </div>
+</ng-template>
